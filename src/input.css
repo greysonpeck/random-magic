@@ -20,14 +20,6 @@ body {
     z-index: -1;
 }
 
-main {
-    flex: 0 1 auto;
-}
-
-/* .row.footer {
-    flex: 0 1 40px;
-} */
-
 
 .theme-chip {
     font-family: 'Fira Code';

@@ -17,17 +17,14 @@
   <body>
     <div class="background"></div>
 
-    <div class="container flex flex-row mx-auto w-auto justify-center">
-      <main class="flex flex-initial sm:max-w-lg mt-12">
-        <img id="commander-image" width="350" height="auto" src="./img/card_default.jpeg" alt="some" />
+    <div class="container flex flex-col sm:flex-row md:w-4/5 sm:w-full sm:pt-24 mx-auto w-auto">
+      <main class="pt-4 px-2 sm:max-w-lg sm:shrink-0">
+        <img id="commander-image" class="mx-auto w-auto max-h-[400px] sm:max-h-[500px]" width="auto" height="400px" src="./img/card_default.jpeg" alt="some" />
       </main>
-      <!-- <div class="row footer flex-auto">
-        <p><b>footer</b> (fixed height)</p>
-      </div> -->
-      <div id="core-info" class="w-auto flex flex-col p-8">
-        <h1 id="commander-name" class="text-7xl h-27">Creature Name</h1>
-        <p id="commander-type" class="text-3xl mt-4">Creature Type</p>
-        <div id="themes" class="flex gap-8 my-4 text-xl uppercase tracking-wide">
+      <div id="core-info" class="flex-col px-2 py-4 max-w-full md:mx-8 sm:max-w-full">
+        <h1 id="commander-name" class="text-4xl sm:text-4xl md:text-7xl h-27">Creature Name</h1>
+        <p id="commander-type" class="text-2xl mt-4 md:text-3xl">Creature Type</p>
+        <div id="themes" class="flex flex-col flex-wrap sm:flex-row gap-6 gap-y-2 my-4 text-xl uppercase tracking-wide">
           <!-- THEMES GO HERE -->
         </div>
         <div id="commander-popularity" class="text-2xl">Popularity:</div>
