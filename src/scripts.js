@@ -1,11 +1,4 @@
-console.log("start shoaib");
-var commanderName = "default";
-var commanderType = "default type";
-var commanderDataName = "default data name";
-var commanderPrice = "default price";
-// var themeOne = "";
-// var themeTwo = "";
-// var themeThree = "";
+console.log("start script");
 
 var edhrecLink = "https://json.edhrec.com/pages/commanders/the-master-multiplied.json";
 async function scryfallRandomCommander() {
@@ -17,6 +10,7 @@ async function scryfallRandomCommander() {
   commanderName = card.name;
   commanderType = card.type_line;
   commanderPrice = card.prices.usd;
+  commanderSetName = card.set_name;
   console.log(commanderType);
   console.log("image_uris I GUESS");
   imagePrimary = card.image_uris.png;
@@ -34,6 +28,10 @@ setTimeout(function () {
   //Set Commander Type
   const commanderTypeElement = document.getElementById("commander-type");
   commanderTypeElement.innerText = commanderType;
+
+  //Set Commander Set Name
+  const commanderSetNameElement = document.getElementById("commander-set-name");
+  commanderSetNameElement.innerText = commanderSetName;
 
   //Set Commander Price
   const commanderPriceElement = document.getElementById("commander-price");
