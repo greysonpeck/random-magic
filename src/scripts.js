@@ -44,13 +44,28 @@ setTimeout(function () {
 
   // Make string for EDHREC lookup
   var commanderDataName = commanderName;
-  // Replace commas and spaces with hyphen.
-  commanderDataName = commanderDataName.replace(/[, ]+/g, "-").toLowerCase();
-  // Trim initial "A-" for Alchemy cards
-  commanderDataName = commanderDataName.replace(/^(A-)/, "");
-  commanderDataName = commanderDataName.replace(/'/, "");
-  console.log(commanderDataName);
 
+  // Sanitize Commander name to EDHRec-friendly name
+  function sanitize(string) {
+    string = string.replace(", ", "-");
+    string = string.replace("//", "-");
+    // Trim initial "A-" for Alchemy cards
+    string = string.replace(/^(A-)/, "");
+    const map = {
+      "'": "",
+      " ": "-",
+      "é": "e",
+      "í": "i",
+      "ú": "u",
+      "á": "a",
+      "ó": "o",
+    };
+    const reg = /['áéíóú\s]/gi;
+    return string.replace(reg, (match) => map[match]);
+  }
+  commanderDataName = sanitize(commanderDataName).toLowerCase();
+
+  // Create EDHRec link
   const edhrecPre = "https://json.edhrec.com/pages/commanders/";
   const edhrecLink = edhrecPre.concat("", commanderDataName) + ".json";
   console.log("EDHRec Link: ", edhrecLink);
