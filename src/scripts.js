@@ -2,16 +2,21 @@ console.log("start shoaib");
 var commanderName = "default";
 var commanderType = "default type";
 var commanderDataName = "default data name";
+var commanderPrice = "default price";
 // var themeOne = "";
 // var themeTwo = "";
 // var themeThree = "";
 
 var edhrecLink = "https://json.edhrec.com/pages/commanders/the-master-multiplied.json";
 async function scryfallRandomCommander() {
-  let response = await fetch("https://api.scryfall.com/cards/random?q=is%3Acommander");
+  let response = await fetch(
+    "https://api.scryfall.com/cards/random?q=%28type%3Acreature+type%3Alegendary%29+%28game%3Apaper%29+legal%3Acommander+&unique=cards&as=grid&order=random"
+  );
   let card = await response.json();
+  console.log(card);
   commanderName = card.name;
   commanderType = card.type_line;
+  commanderPrice = card.prices.usd;
   console.log(commanderType);
   console.log("image_uris I GUESS");
   imagePrimary = card.image_uris.png;
@@ -30,6 +35,10 @@ setTimeout(function () {
   const commanderTypeElement = document.getElementById("commander-type");
   commanderTypeElement.innerText = commanderType;
 
+  //Set Commander Price
+  const commanderPriceElement = document.getElementById("commander-price");
+  commanderPriceElement.innerText = commanderPrice;
+
   //   Replace Img Source
   document.getElementById("commander-image").src = imagePrimary;
 
@@ -39,6 +48,7 @@ setTimeout(function () {
   commanderDataName = commanderDataName.replace(/[, ]+/g, "-").toLowerCase();
   // Trim initial "A-" for Alchemy cards
   commanderDataName = commanderDataName.replace(/^(A-)/, "");
+  commanderDataName = commanderDataName.replace(/'/, "");
   console.log(commanderDataName);
 
   const edhrecPre = "https://json.edhrec.com/pages/commanders/";
@@ -51,6 +61,31 @@ setTimeout(function () {
     let edhrecCard = await response.json();
     console.log(edhrecCard);
     console.log("done with edhrec");
+
+    // Set Commander Rank
+    let commanderRank = edhrecCard.container.json_dict.card.label;
+    commanderRank = parseInt(commanderRank.replace(/[^#]+#/, ""), 10);
+    console.log(commanderRank);
+    var commanderRankTag = 0;
+    if (commanderRank < 50) {
+      commanderRankTag = "Most Popular";
+    } else if (commanderRank < 100) {
+      commanderRankTag = "Very Popular";
+    } else if (commanderRank < 250) {
+      commanderRankTag = "Fairly Popular";
+    } else if (commanderRank < 500) {
+      commanderRankTag = "Not Very Popular";
+    } else if (commanderRank < 1000) {
+      commanderRankTag = "Niche";
+    } else if (commanderRank < 2000) {
+      commanderRankTag = "Hyper-Niche";
+    } else {
+      commanderRankTag = "Nearly Unheard-of";
+    }
+
+    const commanderPopularity = commanderRankTag + " (#" + commanderRank + ")";
+    const commanderPopularityElement = document.getElementById("commander-popularity");
+    commanderPopularityElement.innerText = commanderPopularity;
 
     // Grab and set Themes
     try {
@@ -67,19 +102,22 @@ setTimeout(function () {
       console.log(edhrecCard.panels.tribelinks.themes[0].value);
 
       // DITTO FOR TWO
+      var themeTwoText = edhrecCard.panels.tribelinks.themes[1].value;
       var divThemeTwo = document.createElement("div");
       divThemeTwo.id = "theme-two";
       document.getElementById("themes").appendChild(divThemeTwo);
       document.getElementById("theme-two").classList.add("theme-chip");
-      document.getElementById("theme-two").innerHTML = edhrecCard.panels.tribelinks.themes[1].value;
+      document.getElementById("theme-two").innerHTML = themeTwoText;
       console.log(edhrecCard.panels.tribelinks.themes[1].value);
 
       // DITTO FOR TWO
+
+      var themeThreeText = edhrecCard.panels.tribelinks.themes[2].value;
       var divThemeThree = document.createElement("div");
       divThemeThree.id = "theme-three";
       document.getElementById("themes").appendChild(divThemeThree);
       document.getElementById("theme-three").classList.add("theme-chip");
-      document.getElementById("theme-three").innerHTML = edhrecCard.panels.tribelinks.themes[2].value;
+      document.getElementById("theme-three").innerHTML = themeThreeText;
       console.log(edhrecCard.panels.tribelinks.themes[2].value);
     } catch (e) {
       console.log(e);
@@ -87,4 +125,4 @@ setTimeout(function () {
   }
 
   edhrecQuery();
-}, 500);
+}, 750);

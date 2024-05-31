@@ -1,1 +1,6 @@
 1. Background Cards need to be skipped!
+2. Alchemy Cards coming through.
+3. Commanders with no Themes on EDHRec.
+4. Double-faced cards like Tetzn have two faces, and store img_uris separately
+5. Names with "í", as in "Círdan the Shipwright", which EDHRec has "cirdan-the-shipwright"
+    5 a. Glóin, Dwarf Emissary
