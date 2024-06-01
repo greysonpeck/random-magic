@@ -3,7 +3,7 @@ console.log("start script");
 var edhrecLink = "https://json.edhrec.com/pages/commanders/the-master-multiplied.json";
 async function scryfallRandomCommander() {
   let response = await fetch(
-    "https://api.scryfall.com/cards/random?q=%28type%3Acreature+type%3Alegendary%29+%28game%3Apaper%29+legal%3Acommander+&unique=cards&as=grid&order=random"
+    "https://api.scryfall.com/cards/random?q=%28type%3Acreature+type%3Alegendary%29+%28game%3Apaper%29+legal%3Acommander+&unique=cards&as=grid&is%3Afirstprinting&order=random"
   );
   let card = await response.json();
   console.log(card);
@@ -34,8 +34,8 @@ setTimeout(function () {
   commanderSetNameElement.innerText = commanderSetName;
 
   //Set Commander Price
-  const commanderPriceElement = document.getElementById("commander-price");
-  commanderPriceElement.innerText = commanderPrice;
+  // const commanderPriceElement = document.getElementById("commander-price");
+  // commanderPriceElement.innerText = commanderPrice;
 
   //   Replace Img Source
   document.getElementById("commander-image").src = imagePrimary;
@@ -96,7 +96,7 @@ setTimeout(function () {
       commanderRankTag = "Nearly Unheard-of";
     }
 
-    const commanderPopularity = commanderRankTag + " (#" + commanderRank + ")";
+    const commanderPopularity = "Rank #" + commanderRank + " – " + commanderRankTag;
     const commanderPopularityElement = document.getElementById("commander-popularity");
     commanderPopularityElement.innerText = commanderPopularity;
 

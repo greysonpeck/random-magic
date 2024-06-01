@@ -11,9 +11,10 @@ body {
 }
 
 .background {
-    background-color: #e5e5f7;
-    opacity: 0.1;
+    background-color: #ebeff5;
+    /* opacity: 0.1;
     background: repeating-linear-gradient(-45deg, #83825d, #83825d 2px, #e5e5f7 2px, #e5e5f7 10px);
+     */
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -22,6 +23,6 @@ body {
 
 
 .theme-chip {
-    font-family: 'Fira Code';
-    @apply px-3 py-1 bg-slate-200 text-slate-700 rounded-md;
+    font-family: 'Fira Code', sans-serif;
+    @apply px-3 py-1 bg-slate-200 text-slate-600 rounded-md;
 }
