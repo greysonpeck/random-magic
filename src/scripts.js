@@ -11,15 +11,16 @@ async function scryfallRandomCommander() {
   commanderType = card.type_line;
   commanderPrice = card.prices.usd;
   commanderSetName = card.set_name;
+  commanderReleaseDate = card.released_at;
   console.log(commanderType);
-  console.log("image_uris I GUESS");
-  imagePrimary = card.image_uris.png;
+  imagePrimary = card.image_uris.normal;
+
+  callEdhRec();
 }
 
 scryfallRandomCommander();
-// console.log(scryfallRandomCommander());
 
-setTimeout(function () {
+function callEdhRec() {
   //Set Commander Name
   console.log(commanderName);
   const commanderHeaderElement = document.getElementById("commander-name");
@@ -31,7 +32,7 @@ setTimeout(function () {
 
   //Set Commander Set Name
   const commanderSetNameElement = document.getElementById("commander-set-name");
-  commanderSetNameElement.innerText = commanderSetName;
+  commanderSetNameElement.innerText = commanderSetName + " (" + commanderReleaseDate.substring(0, 4) + ")";
 
   //Set Commander Price
   // const commanderPriceElement = document.getElementById("commander-price");
@@ -138,4 +139,4 @@ setTimeout(function () {
   }
 
   edhrecQuery();
-}, 750);
+}
