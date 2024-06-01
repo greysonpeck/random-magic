@@ -5,6 +5,9 @@ async function scryfallRandomCommander() {
   let response = await fetch(
     "https://api.scryfall.com/cards/random?q=%28type%3Acreature+type%3Alegendary%29+%28game%3Apaper%29+legal%3Acommander+&unique=cards&as=grid&is%3Afirstprinting&order=random"
   );
+
+  // hardcode a Transforming card
+  // "https://api.scryfall.com/cards/named?fuzzy=elesh+norn+argent"
   let card = await response.json();
   console.log(card);
   commanderName = card.name;
@@ -12,8 +15,13 @@ async function scryfallRandomCommander() {
   commanderPrice = card.prices.usd;
   commanderSetName = card.set_name;
   commanderReleaseDate = card.released_at;
-  console.log(commanderType);
-  imagePrimary = card.image_uris.normal;
+
+  // Check for transforming card. Note: "card.layout" is unreliable
+  if (commanderName.includes("//")) {
+    imagePrimary = card.card_faces[0].image_uris.normal;
+  } else {
+    imagePrimary = card.image_uris.normal;
+  }
 
   callEdhRec();
 }
@@ -47,7 +55,8 @@ function callEdhRec() {
   // Sanitize Commander name to EDHRec-friendly name
   function sanitize(string) {
     string = string.replace(", ", "-");
-    string = string.replace("//", "-");
+    string = string.replace(/\/\/.*$/, "");
+    string = string.replace(/\s$/, "");
     // Trim initial "A-" for Alchemy cards
     string = string.replace(/^(A-)/, "");
     const map = {
@@ -60,6 +69,8 @@ function callEdhRec() {
       "ó": "o",
     };
     const reg = /['áéíóú\s]/gi;
+    console.log("attempt " + string);
+
     return string.replace(reg, (match) => map[match]);
   }
   commanderDataName = sanitize(commanderDataName).toLowerCase();
